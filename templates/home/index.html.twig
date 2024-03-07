@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Destinations{% endblock %}
+
+{% block body %}
+
+
+<div class="wrapper text-center">
+    <h1 class="mb-3 mt-5">Welcome to FOO TRIP!</h1>
+    <h2 class="mb-5">Our Destinations</h2>
+
+    <div class="conatiner">
+
+    <div class="row">
+            {% for destination in destinations %}
+
+             <div class="col-md-3">
+                <img src="{{ asset('/uploads/'~ destination.image) }}" />
+                <span class="d-block mt-2 fs-5 text-uppercase"><b><a class="text-underline" href="{{ path('app_destination_details', {'id' : destination.id })}}">{{destination.name}}</a></b></span>
+                <span class="d-block text-danger fw-bolder">{{destination.price}} $</span>
+                <p class="d-block text-truncate">{{destination.description}}</p>
+             </div>
+
+
+            {% endfor %}
+    </div>
+
+    </div>
+</div>
+{% endblock %}

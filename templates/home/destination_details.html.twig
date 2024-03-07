@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Destination Details{% endblock %}
+
+{% block body %}
+
+
+<div class="wrapper p-5">
+
+    <h2  class="mb-3 mt-5 text-uppercase"><b>{{destination.name}}</b></h2>
+
+    <div class="conatiner">
+
+    <div class="row">
+            <div class="col-md-4">
+                <img src="{{ asset('/uploads/'~ destination.image) }}" class="w-100" />
+            </div> 
+            <div class="col-md-8">   
+                <span class="d-block mt-2 fs-5 text-uppercase">{{destination.duration}} day(s)</span>
+                <span class="d-block text-danger fw-bolder">{{destination.price}} $</span>
+                <p class="d-block">{{destination.description}}</p>
+            </div> 
+    </div>
+
+    </div>
+</div>
+{% endblock %}

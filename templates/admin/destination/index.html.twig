@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Destination index{% endblock %}
+
+{% block body %}
+
+<div class="wrapper p-5">
+    <h1>Destinations List</h1>
+    <a href="{{ path('app_admin_destination_new') }}" class="float-end mb-3">Create new</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Duration</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for destination in destinations %}
+            <tr>
+                <td>{{ destination.name }}</td>
+                <td>{{ destination.description }}</td>
+                <td>{{ destination.price }}</td>
+                <td>{{ destination.duration }} Day(s)</td>
+                <td>{{ destination.image }}</td>
+                <td>
+                    <a href="{{ path('app_admin_destination_edit', {'id': destination.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
