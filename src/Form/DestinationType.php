@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\Image;
 
@@ -32,6 +33,21 @@ class DestinationType extends AbstractType
             ->add('duration', TextType::class,[
                 'attr' => ['class' => 'form-control'],
                 'label_attr' => ['class' => 'form-control-label fw-bold'],
+            ])
+            
+            ->add('type', ChoiceType::class,[
+                'mapped' => true,
+                'label' => 'Type',
+                'attr' => ['class' => 'form-select'],
+                'label_attr' => ['class' => 'form-control-label  fw-bold'],
+                'required' => false,
+                'expanded' => false,
+                'multiple' => false,
+                'placeholder' => '',
+                'choices' => [
+                    'Honey Moon' => 'honey_moon',
+                     'Other' => 'other'
+                ]
             ])
             ->add('image', FileType::class, [
                 'mapped' => false,

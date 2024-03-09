@@ -12,16 +12,14 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
 
-    public function __construct(DestinationRepository $destinationRepo){
-        $this->destinationRepo = $destinationRepo;
-    }
     /**
-     * Displays the list of destinations with their images and descriptions.
+     * Displays the list of honeymoon destinations with their images and descriptions.
      */
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(DestinationRepository $destinationRepo): Response
     {
-        $destinations = $this->destinationRepo->findAll();
+        // Uses the findBy function of the DestinationRepository to list destinations by type
+        $destinations = $destinationRepo->findBy(['type' => 'honey_moon']);
         return $this->render('home/index.html.twig', [
             'destinations' => $destinations,
         ]);
@@ -31,10 +29,10 @@ class HomeController extends AbstractController
      * Displays to the details of the destination
      */
     #[Route('/destination/{id}', name: 'app_destination_details')]
-    public function destinationDetails(Request $request, int $id): Response
+    public function destinationDetails(Request $request, int $id, DestinationRepository $destinationRepo): Response
     {
 
-        $destination = $this->destinationRepo->find($id);
+        $destination = $destinationRepo->find($id);
         return $this->render('home/destination_details.html.twig', [
             'destination' => $destination,
         ]);

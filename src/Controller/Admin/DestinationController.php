@@ -31,7 +31,7 @@ class DestinationController extends AbstractController
 
 
     /**
-     * Destinations List
+     * Uses the 'findAll()' function of the DestinationRepository to list all destinations
      */
     #[Route('/', name: 'app_admin_destination_index', methods: ['GET'])]
     public function index(DestinationRepository $destinationRepository): Response
@@ -54,7 +54,9 @@ class DestinationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            /**
+             * Uses the ImageUploader Service to upload the Destination image into 'uploads' Folder
+             */
             $image = $form->get('image')->getData();
             if ($image) {
                 $imageName = $this->imageUploader->upload($image);
@@ -73,14 +75,6 @@ class DestinationController extends AbstractController
             'form' => $form,
         ]);
     }
-
-    // #[Route('/{id}', name: 'app_admin_destination_show', methods: ['GET'])]
-    // public function show(Destination $destination): Response
-    // {
-    //     return $this->render('admin/destination/show.html.twig', [
-    //         'destination' => $destination,
-    //     ]);
-    // }
 
 
     /**

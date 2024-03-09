@@ -14,17 +14,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(normalizationContext: ['groups' => 'destination:item']),
-        new GetCollection(normalizationContext: ['groups' => 'destination:list'])
+        new GetCollection(normalizationContext: ['groups' => 'destination:list']),
     ],
     order: ['id' => 'ASC'],
     paginationEnabled: false,
+    formats: [
+        'csv' => 'text/csv',
+    ]
 )]
 class Destination
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['destination:list', 'destination:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
@@ -43,9 +45,11 @@ class Destination
     #[Groups(['destination:list', 'destination:item'])]
     private ?float $duration = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(['destination:list', 'destination:item'])]
+    #[ORM\Column(length: 255, nullable : true)]
     private ?string $image = null;
+
+    #[ORM\Column(length: 20)]
+    private ?string $type = null;
 
     public function getId(): ?int
     {
@@ -108,6 +112,18 @@ class Destination
     public function setImage(string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

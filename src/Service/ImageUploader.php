@@ -17,13 +17,14 @@ class ImageUploader
     public function upload(UploadedFile $file): string
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        //Slug creates a the friendly URL.
         $safeFilename = $this->slugger->slug($originalFilename);
         $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
         try {
             $file->move($this->getTargetDirectory(), $fileName);
         } catch (FileException $e) {
-            // ... handle exception if something happens during file upload
+            echo $e;
         }
 
         return $fileName;
