@@ -6,14 +6,15 @@
 
 
 <div class="wrapper p-5">
-
+    <h1 class="mb-3 mt-2 text-center">Destination Details</h1>
     <h2  class="mb-3 mt-5 text-uppercase"><b>{{destination.name}}</b></h2>
 
     <div class="conatiner">
 
     <div class="row">
             <div class="col-md-4">
-                <img src="{{ asset('/uploads/'~ destination.image) }}" class="w-100" />
+            {% set image = (destination.image is not empty) ? destination.image :'default.png' %}
+                <img src="{{ asset('/uploads/'~ image) }}" class="w-100" />
             </div> 
             <div class="col-md-8">   
                 <span class="d-block mt-2 fs-5 text-uppercase">{{destination.duration}} day(s)</span>

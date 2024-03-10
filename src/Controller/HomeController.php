@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Destination;
 use App\Repository\DestinationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,10 +30,8 @@ class HomeController extends AbstractController
      * Displays to the details of the destination
      */
     #[Route('/destination/{id}', name: 'app_destination_details')]
-    public function destinationDetails(Request $request, int $id, DestinationRepository $destinationRepo): Response
+    public function destinationDetails(Destination $destination): Response
     {
-
-        $destination = $destinationRepo->find($id);
         return $this->render('home/destination_details.html.twig', [
             'destination' => $destination,
         ]);

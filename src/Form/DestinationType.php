@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType ;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -26,13 +27,15 @@ class DestinationType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'label_attr' => ['class' => 'form-control-label fw-bold'],
             ])
-            ->add('price', TextType::class,[
+            ->add('price', NumberType::class,[
                 'attr' => ['class' => 'form-control'],
                 'label_attr' => ['class' => 'form-control-label fw-bold'],
+                'invalid_message' => 'Please enter a number (ex: 10 - 10.50)'
             ])
-            ->add('duration', TextType::class,[
+            ->add('duration', NumberType::class,[
                 'attr' => ['class' => 'form-control'],
                 'label_attr' => ['class' => 'form-control-label fw-bold'],
+                'invalid_message' => 'Please enter a number (ex: 10 - 10.50)'
             ])
             
             ->add('type', ChoiceType::class,[
@@ -40,7 +43,7 @@ class DestinationType extends AbstractType
                 'label' => 'Type',
                 'attr' => ['class' => 'form-select'],
                 'label_attr' => ['class' => 'form-control-label  fw-bold'],
-                'required' => false,
+                'required' => true,
                 'expanded' => false,
                 'multiple' => false,
                 'placeholder' => '',

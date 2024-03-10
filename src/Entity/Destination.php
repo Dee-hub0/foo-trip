@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\GetCollection;
 use App\Repository\DestinationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: DestinationRepository::class)]
@@ -30,18 +31,28 @@ class Destination
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\Type('string')]
     #[Groups(['destination:list', 'destination:item'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Type('string')]
     #[Groups(['destination:list', 'destination:item'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    #[Assert\Type(
+        type: 'numeric',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     #[Groups(['destination:list', 'destination:item'])]
     private ?string $price = null;
 
     #[ORM\Column]
+    #[Assert\Type(
+        type: 'numeric',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     #[Groups(['destination:list', 'destination:item'])]
     private ?float $duration = null;
 

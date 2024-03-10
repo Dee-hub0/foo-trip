@@ -25,7 +25,8 @@
                 <td>{{ destination.description }}</td>
                 <td>{{ destination.price }}</td>
                 <td>{{ destination.duration }} Day(s)</td>
-                <td>{{ destination.image }}</td>
+                <td>    {% set image = (destination.image is not empty) ? destination.image :'default.png' %}
+    <img src="{{ asset('/uploads/'~ image) }}" style="width: 120px;height: 120px;display: block;"/></td>
                 <td>
                     <a href="{{ path('app_admin_destination_edit', {'id': destination.id}) }}">edit</a>
                 

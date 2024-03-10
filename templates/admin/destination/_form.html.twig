@@ -1,10 +1,44 @@
 {{ form_start(form) }}
-    {{ form_row(form.name) }}
-     {{ form_row(form.description) }}
-      {{ form_row(form.duration) }}
-       {{ form_row(form.price) }}
-        {{ form_row(form.type) }}
-       <img src="{{ asset('/uploads/'~ destination.image) }}" style="width: 120px;height: 120px;display: block;"/>
-        {{ form_row(form.image) }}
+
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+    <div class="invalid-feedback d-block">
+        {{ form_errors(form.name) }}
+    </div>
+
+     {{ form_label(form.description) }}
+     {{ form_widget(form.description) }}
+    <div class="invalid-feedback d-block">
+        {{ form_errors(form.description) }}
+    </div>   
+
+    {{ form_label(form.duration) }}
+    {{ form_widget(form.duration) }}
+    <div class="invalid-feedback d-block">
+        {{ form_errors(form.duration) }}
+    </div>
+
+    {{ form_label(form.price) }}
+    {{ form_widget(form.price) }}
+    <div class="invalid-feedback d-block">
+        {{ form_errors(form.price) }}
+    </div>
+
+
+    {{ form_label(form.type) }}
+    {{ form_widget(form.type) }}
+    <div class="invalid-feedback d-block">
+        {{ form_errors(form.type) }}
+    </div>
+
+    {% set image = (form.vars.data.image is not empty) ? form.vars.data.image :'default.png' %}
+    <img src="{{ asset('/uploads/'~ image) }}" style="width: 120px;height: 120px;display: block;"/>
+    {{ form_label(form.image) }}
+    {{ form_widget(form.image) }}
+    <div class="invalid-feedback d-block">
+        {{ form_errors(form.image) }}
+    </div>
+
+
     <button class="btn btn-success float-end">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

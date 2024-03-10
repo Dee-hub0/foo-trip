@@ -13,6 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 // the name of the command is what users type after "php bin/console"
@@ -35,7 +36,7 @@ class DestinationListCommand extends Command
             'Content-Type: text/csv',
             'Accept: text/csv'
         );
-        // Call the Api end point api to retreive all destinations
+        // Call the Api end point to retreive all destinations
         $response = $this->client->request(
             'GET',
             'https://127.0.0.1:8000/api/destinations',[
@@ -44,7 +45,7 @@ class DestinationListCommand extends Command
             ]
         );
         // Writes The Csv File content retreived by the Api inside the 'destnation.csv' File
-        $fileHandler = fopen('destinations.csv', 'w+');
+        $fileHandler = fopen('destinations.csv', 'w');
         fwrite($fileHandler, $response->getContent());
         // Open the file for read/write and lunch windows open file cmd
         $fileHandler = fopen('D:\workspace\the_foo_trip\destinations.csv', 'r+');
@@ -62,13 +63,15 @@ class DestinationListCommand extends Command
         $table = new Table($output);
         $table
             ->setHeaders(['Name', 'Description', 'Price', 'Duration']);
-
             foreach ($arrayContent  as $key => $value) {
                 // Denormalizes the encoded array to a 'Destination' Object
                 $destination = $serializer->denormalize($value, Destination::class);
                 $table
-                    ->setRow($key,[''.$destination->getName().'', ''.$destination->getDescription().'',
+                    ->addRow([''.$destination->getName().'', ''.$destination->getDescription().'',
                     ''.$destination->getPrice().'', ''.$destination->getDuration().' DAYS(S)']);
+                    if($key !== array_key_last($arrayContent))
+                        $table->addRow(new TableSeparator());
+                           
             }
         $table->setColumnMaxWidth(1, 50);    
         $table->setStyle('box');

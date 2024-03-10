@@ -5,9 +5,9 @@
 {% block body %}
 
 
-<div class="wrapper text-center">
-    <h1 class="mb-3 mt-5">Welcome to FOO TRIP!</h1>
-    <h2 class="mb-5">Our Destinations</h2>
+<div class="wrapper text-center p-5">
+    <h1 class="mb-3 mt-2">Welcome to FOO TRIP!</h1>
+    <h3 class="mb-5 text-warning">Our Honey Moon Destinations</h3>
 
     <div class="conatiner">
 
@@ -15,7 +15,8 @@
             {% for destination in destinations %}
 
              <div class="col-md-3">
-                <img src="{{ asset('/uploads/'~ destination.image) }}" />
+             {% set image = (destination.image is not empty) ? destination.image :'default.png' %}
+                <img src="{{ asset('/uploads/'~ image ) }}" class="img-thumbnail" style="width:300px;height:220px"/>
                 <span class="d-block mt-2 fs-5 text-uppercase"><b><a class="text-underline" href="{{ path('app_destination_details', {'id' : destination.id })}}">{{destination.name}}</a></b></span>
                 <span class="d-block text-danger fw-bolder">{{destination.price}} $</span>
                 <p class="d-block text-truncate">{{destination.description}}</p>

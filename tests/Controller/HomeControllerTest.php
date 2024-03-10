@@ -21,14 +21,12 @@ class HomeControllerTest extends WebTestCase
         $this->client = static::createClient();
         $this->manager = static::getContainer()->get('doctrine')->getManager();
         $this->repository = $this->manager->getRepository(Destination::class);
-
         foreach ($this->repository->findAll() as $object) {
             $this->manager->remove($object);
         }
 
         $this->manager->flush();
     }
-
 
     public function testIndex(): void
     {
@@ -39,6 +37,44 @@ class HomeControllerTest extends WebTestCase
         // Use the $crawler to perform additional assertions e.g.
         // self::assertSame('Some text on the page', $crawler->filter('.p')->first());
     }
+
+    /**
+     * @dataProvider urlProvider
+     */
+    public function testPageIsSuccessful($url): void
+    {
+        $userRepository = static::getContainer()->get(UserRepository::class);
+
+        // retrieve the test user
+        $testUser = $userRepository->findOneByEmail('admin@mail.com');
+        $this->client->loginUser($testUser);
+        $fixture = new Destination();
+        $fixture->setName('Destination1');
+        $fixture->setDescription('Description');
+        $fixture->setPrice(20.4);
+        $fixture->setDuration(4);
+        $fixture->setImage('image');
+        $fixture->setType('other');
+
+        $this->manager->persist($fixture);
+        $this->manager->flush();
+        
+        $this->client->request('GET', sprintf($url , $fixture->getId()));
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function urlProvider(): \Generator
+    {
+        yield ['/'];
+        yield ['/destination/%u'];
+        yield ['/login'];
+        yield ['/admin/destination/'];
+        yield ['/admin/destination/new'];
+        yield ['/admin/destination/%u/edit'];
+    }
+
+
 
 
     public function testDetails(): void
